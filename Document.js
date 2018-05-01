@@ -41,12 +41,6 @@ function Document( source, layer, source_id ){
   this.setLayer( layer );
   this.setSourceId( source_id );
   this.setId( source_id );
-
-  // set the elasticsearch '_type' property to be the same as $layer
-  // this may be removed/modified in the future if required but will mean
-  // that; for example; all 'address' data ends up in the same '_type', even
-  // if it comes from different sources.
-  this.setType( layer );
 }
 
 Document.prototype.toJSON = function(){
@@ -101,8 +95,9 @@ Document.prototype.toESDocument = function() {
 
   return {
     _index: config.schema.indexName,
-    _type: this.getType(),
     _id: this.getId(),
+    // From ES5 onward, the default mapping type name is '_doc'. However ES2 does not allow that, so use 'doc' for now
+    _type: 'doc',
     data: doc
   };
 };
@@ -120,20 +115,6 @@ Document.prototype.setId = function( id ){
 
 Document.prototype.getId = function(){
   return this._meta.id;
-};
-
-// type
-Document.prototype.setType = function( type ){
-
-  validate.type('string', type);
-  validate.truthy(type);
-
-  this._meta.type = type;
-  return this;
-};
-
-Document.prototype.getType = function(){
-  return this._meta.type;
 };
 
 // source

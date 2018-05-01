@@ -46,8 +46,8 @@ module.exports.tests.toESDocument = function(test) {
 
     var expected = {
       _index: 'pelias',
-      _type: 'mylayer',
       _id: 'myid',
+      _type: 'doc',
       data: {
         layer: 'mylayer',
         name: {
@@ -94,8 +94,8 @@ module.exports.tests.toESDocument = function(test) {
 
     var expected = {
       _index: 'pelias',
-      _type: 'mylayer',
       _id: 'myid',
+      _type: 'doc',
       data: {
         source: 'mysource',
         layer: 'mylayer',
